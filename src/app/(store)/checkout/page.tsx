@@ -11,81 +11,103 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useCart } from "@/lib/cart-context";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, CreditCard, Lock } from "lucide-react";
+import { CreditCard, Lock, Truck } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
 
-const checkoutSchema = z.object({
-  email: z.string().email("Please enter a valid email"),
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  address: z.string().min(1, "Address is required"),
-  city: z.string().min(1, "City is required"),
-  state: z.string().min(1, "State is required"),
+const checkoutFormSchema = z.object({
+  // Shipping Information
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  address: z.string().min(5, "Address must be at least 5 characters"),
+  city: z.string().min(2, "City must be at least 2 characters"),
+  state: z.string().min(2, "State is required"),
   zipCode: z.string().min(5, "ZIP code must be at least 5 characters"),
+  country: z.string().min(2, "Country is required"),
+
+  // Payment Information
   cardNumber: z.string().min(16, "Card number must be 16 digits"),
-  expiryDate: z.string().min(5, "Expiry date is required (MM/YY)"),
-  cvv: z.string().min(3, "CVV must be at least 3 digits"),
-  cardName: z.string().min(1, "Name on card is required"),
+  expiryDate: z
+    .string()
+    .regex(/^\d{2}\/\d{2}$/, "Expiry date must be MM/YY format"),
+  cvv: z.string().min(3, "CVV must be 3 digits"),
+  cardholderName: z.string().min(2, "Cardholder name is required"),
 });
 
-type CheckoutFormData = z.infer<typeof checkoutSchema>;
+type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
 
 export default function CheckoutPage() {
-  const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const form = useForm<CheckoutFormData>({
-    resolver: zodResolver(checkoutSchema),
+  const form = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
-      email: "",
       firstName: "",
       lastName: "",
+      email: "",
+      phone: "",
       address: "",
       city: "",
       state: "",
       zipCode: "",
+      country: "US",
       cardNumber: "",
       expiryDate: "",
       cvv: "",
-      cardName: "",
+      cardholderName: "",
     },
   });
 
-  const subtotal = totalPrice;
-  const shipping = subtotal >= 100 ? 0 : 9.99;
-  const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const onSubmit = async (values: CheckoutFormValues) => {
+    console.log("Form values:", values);
+    try {
+      // Simulate API call
+      toast.loading("Processing your order...");
 
-  const onSubmit = async () => {
-    setLoading(true);
+      // Simulate processing time
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Simulate processing payment
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Clear the cart
+      clearCart();
 
-    // Clear cart and redirect to success page
-    clearCart();
-    router.push("/checkout/success");
+      toast.success("Order placed successfully!");
+
+      // Redirect to success page
+      router.push("/checkout/success");
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error("Failed to process order. Please try again.");
+    }
   };
+
+  const shippingCost = totalPrice >= 100 ? 0 : 9.99;
+  const tax = totalPrice * 0.08;
+  const finalTotal = totalPrice + shippingCost + tax;
 
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center space-y-6">
-          <h1 className="text-3xl font-bold">No items to checkout</h1>
+          <h1 className="text-3xl font-bold">Your cart is empty</h1>
           <p className="text-muted-foreground">
-            Your cart is empty. Add some items before proceeding to checkout.
+            Add some items to your cart before proceeding to checkout.
           </p>
-          <Link href="/">
-            <Button>Continue Shopping</Button>
-          </Link>
+          <Button onClick={() => router.push("/")}>Continue Shopping</Button>
         </div>
       </div>
     );
@@ -93,30 +115,54 @@ export default function CheckoutPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Button
-        variant="ghost"
-        onClick={() => router.push("/cart")}
-        className="mb-6"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Cart
-      </Button>
-
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Checkout Form */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+        >
+          {/* Checkout Form */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Shipping Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Truck className="h-5 w-5" />
+                  Shipping Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>First Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
                     name="email"
@@ -124,255 +170,294 @@ export default function CheckoutPage() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="your@email.com" {...field} />
+                          <Input
+                            type="email"
+                            placeholder="john@example.com"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Shipping Address</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem className="mt-4">
-                    <FormLabel>Address</FormLabel>
-                    <FormControl>
-                      <Input placeholder="123 Main St" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>City</FormLabel>
-                      <FormControl>
-                        <Input placeholder="New York" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="state"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>State</FormLabel>
-                      <FormControl>
-                        <Input placeholder="NY" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="zipCode"
-                render={({ field }) => (
-                  <FormItem className="mt-4">
-                    <FormLabel>ZIP Code</FormLabel>
-                    <FormControl>
-                      <Input placeholder="10001" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <CreditCard className="h-5 w-5 mr-2" />
-                Payment Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="cardNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Card Number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="1234 5678 9012 3456" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="expiryDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Expiry Date</FormLabel>
-                      <FormControl>
-                        <Input placeholder="MM/YY" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cvv"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>CVV</FormLabel>
-                      <FormControl>
-                        <Input placeholder="123" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="cardName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name on Card</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
-          <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={loading}
-            onClick={form.handleSubmit(onSubmit)}
-          >
-            <Lock className="h-4 w-4 mr-2" />
-            {loading ? "Processing..." : `Place Order - $${total.toFixed(2)}`}
-          </Button>
-        </div>
-
-        {/* Order Summary */}
-        <div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Order Items */}
-              <div className="space-y-3">
-                {items.map((item) => (
-                  <div key={item.id} className="flex items-center space-x-3">
-                    <div className="relative w-12 h-12 flex-shrink-0">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover rounded"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Qty: {item.quantity}
-                      </p>
-                    </div>
-                    <div className="text-sm font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <hr />
-
-              {/* Pricing Breakdown */}
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="tel"
+                            placeholder="(555) 123-4567"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>
-                    {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
-                  </span>
+
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Address</FormLabel>
+                      <FormControl>
+                        <Input placeholder="123 Main St" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input placeholder="New York" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>State</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select state" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="NY">New York</SelectItem>
+                            <SelectItem value="CA">California</SelectItem>
+                            <SelectItem value="TX">Texas</SelectItem>
+                            <SelectItem value="FL">Florida</SelectItem>
+                            <SelectItem value="IL">Illinois</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="zipCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>ZIP Code</FormLabel>
+                        <FormControl>
+                          <Input placeholder="10001" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Country</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select country" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="US">United States</SelectItem>
+                          <SelectItem value="CA">Canada</SelectItem>
+                          <SelectItem value="UK">United Kingdom</SelectItem>
+                          <SelectItem value="AU">Australia</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Payment Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5" />
+                  Payment Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="cardholderName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cardholder Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="cardNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Card Number</FormLabel>
+                      <FormControl>
+                        <Input placeholder="1234 5678 9012 3456" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="expiryDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Expiry Date</FormLabel>
+                        <FormControl>
+                          <Input placeholder="MM/YY" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="cvv"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>CVV</FormLabel>
+                        <FormControl>
+                          <Input placeholder="123" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
+
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Lock className="h-4 w-4" />
+                  Your payment information is secure and encrypted
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <Card className="sticky top-4">
+              <CardHeader>
+                <CardTitle>Order Summary</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Order Items */}
+                <div className="space-y-3">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex items-center space-x-3">
+                      <div className="relative w-12 h-12 flex-shrink-0">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover rounded-md"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          ${item.price.toFixed(2)} × {item.quantity}
+                        </p>
+                      </div>
+                      <div className="text-sm font-medium">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 <hr />
-                <div className="flex justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
-                </div>
-              </div>
 
-              <div className="text-sm text-muted-foreground space-y-1">
-                <p>✓ Secure 256-bit SSL encryption</p>
-                <p>✓ Money-back guarantee</p>
-                <p>✓ Free returns within 30 days</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+                {/* Order Totals */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>
+                      Subtotal (
+                      {items.reduce((sum, item) => sum + item.quantity, 0)}{" "}
+                      items)
+                    </span>
+                    <span>${totalPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Shipping</span>
+                    <span>
+                      {shippingCost === 0
+                        ? "Free"
+                        : `$${shippingCost.toFixed(2)}`}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tax</span>
+                    <span>${tax.toFixed(2)}</span>
+                  </div>
+                  <hr />
+                  <div className="flex justify-between text-lg font-bold">
+                    <span>Total</span>
+                    <span>${finalTotal.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting
+                    ? "Processing..."
+                    : "Place Order"}
+                </Button>
+
+                <div className="text-xs text-muted-foreground space-y-1">
+                  <p>✓ Secure 256-bit SSL encryption</p>
+                  <p>✓ 30-day money-back guarantee</p>
+                  <p>✓ Free returns on all orders</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
