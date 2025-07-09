@@ -31,7 +31,7 @@ export default function AdminSidebar() {
   const { logout } = useAuth();
 
   return (
-    <div className="flex h-full w-64 flex-col bg-background border-r">
+    <div className="bg-background flex h-full w-64 flex-col border-r">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/" className="flex items-center space-x-2">
           <Package className="h-6 w-6" />
@@ -57,14 +57,14 @@ export default function AdminSidebar() {
         ))}
       </nav>
 
-      <div className="border-t p-4 space-y-2">
+      <div className="space-y-2 border-t p-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Theme</span>
+          <span className="text-muted-foreground text-sm">Theme</span>
           <ModeToggle />
         </div>
         <Link href="/">
           <Button variant="outline" className="w-full justify-start" size="sm">
-            <Home className="h-4 w-4 mr-2" />
+            <Home className="mr-2 h-4 w-4" />
             Back to Store
           </Button>
         </Link>
@@ -74,7 +74,7 @@ export default function AdminSidebar() {
           size="sm"
           onClick={logout}
         >
-          <LogOut className="h-4 w-4 mr-2" />
+          <LogOut className="mr-2 h-4 w-4" />
           Logout
         </Button>
       </div>

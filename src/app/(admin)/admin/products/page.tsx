@@ -46,7 +46,7 @@ export default function AdminProductsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-muted-foreground">Loading products...</div>
       </div>
     );
@@ -58,7 +58,7 @@ export default function AdminProductsPage() {
         <h1 className="text-3xl font-bold tracking-tight">Products</h1>
         <Link href="/admin/add-product">
           <Button>
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="mr-2 h-4 w-4" />
             Add Product
           </Button>
         </Link>
@@ -70,7 +70,7 @@ export default function AdminProductsPage() {
         </CardHeader>
         <CardContent>
           {products.length === 0 ? (
-            <div className="text-center py-8">
+            <div className="py-8 text-center">
               <p className="text-muted-foreground mb-4">No products found.</p>
               <Link href="/admin/add-product">
                 <Button>Add your first product</Button>
@@ -100,7 +100,7 @@ export default function AdminProductsPage() {
                         />
                         <div>
                           <div className="font-medium">{product.title}</div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-muted-foreground text-sm">
                             ID: {product.id}
                           </div>
                         </div>

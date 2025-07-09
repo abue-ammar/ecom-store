@@ -35,7 +35,7 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-muted-foreground">Loading dashboard...</div>
       </div>
     );
@@ -56,11 +56,11 @@ export default function AdminDashboard() {
             <CardTitle className="text-sm font-medium">
               Total Products
             </CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <Package className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalProducts}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Products in inventory
             </p>
           </CardContent>
@@ -69,11 +69,11 @@ export default function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Value</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalValue.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Combined product value
             </p>
           </CardContent>
@@ -82,24 +82,24 @@ export default function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Average Price</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${avgPrice.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">Per product</p>
+            <p className="text-muted-foreground text-xs">Per product</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Categories</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {new Set(products.map((p) => p.category).filter(Boolean)).size}
             </div>
-            <p className="text-xs text-muted-foreground">Product categories</p>
+            <p className="text-muted-foreground text-xs">Product categories</p>
           </CardContent>
         </Card>
       </div>
@@ -112,13 +112,13 @@ export default function AdminDashboard() {
           <CardContent className="space-y-4">
             <Link href="/admin/add-product">
               <Button className="w-full justify-start">
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 Add New Product
               </Button>
             </Link>
             <Link href="/admin/products">
               <Button variant="outline" className="w-full justify-start">
-                <Package className="h-4 w-4 mr-2" />
+                <Package className="mr-2 h-4 w-4" />
                 View All Products
               </Button>
             </Link>
@@ -136,12 +136,12 @@ export default function AdminDashboard() {
               <div className="space-y-2">
                 {products.slice(-3).map((product) => (
                   <div key={product.id} className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-muted rounded-md flex items-center justify-center">
+                    <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-md">
                       <Package className="h-4 w-4" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">{product.title}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         ${product.price.toFixed(2)}
                       </p>
                     </div>

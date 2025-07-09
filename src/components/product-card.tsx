@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="relative block aspect-square h-full w-full">
       <Link href={`/products/${product.id}`}>
-        <div className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800">
+        <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-blue-600 dark:border-neutral-800 dark:bg-black">
           <Image
             src={product.image}
             alt={product.title}
@@ -48,7 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Category badge in top corner */}
           {product.category && (
             <Badge
-              className="absolute top-2 left-2 bg-white/70 text-black backdrop-blur-md dark:bg-black/70 dark:text-white border-neutral-200 dark:border-neutral-800"
+              className="absolute top-2 left-2 border-neutral-200 bg-white/70 text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white"
               variant="secondary"
             >
               {product.category}
@@ -56,14 +56,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           {/* Add to cart button - appears on hover */}
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             <Button
               size="sm"
               onClick={(e) => {
                 e.preventDefault();
                 handleAddToCart();
               }}
-              className="rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+              className="rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700"
             >
               Add to Cart
             </Button>

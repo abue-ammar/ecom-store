@@ -20,9 +20,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
   if (!isAdmin) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+          <h1 className="mb-4 text-2xl font-bold">Access Denied</h1>
           <p className="text-muted-foreground">
             You need admin privileges to access this page.
           </p>

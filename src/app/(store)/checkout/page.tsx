@@ -102,7 +102,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center space-y-6">
+        <div className="space-y-6 text-center">
           <h1 className="text-3xl font-bold">Your cart is empty</h1>
           <p className="text-muted-foreground">
             Add some items to your cart before proceeding to checkout.
@@ -115,15 +115,15 @@ export default function CheckoutPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+      <h1 className="mb-8 text-3xl font-bold">Checkout</h1>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 gap-8 lg:grid-cols-3"
         >
           {/* Checkout Form */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="space-y-8 lg:col-span-2">
             {/* Shipping Information */}
             <Card>
               <CardHeader>
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="firstName"
@@ -162,7 +162,7 @@ export default function CheckoutPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="email"
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
                   )}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <FormField
                     control={form.control}
                     name="city"
@@ -335,7 +335,7 @@ export default function CheckoutPage() {
                   )}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="expiryDate"
@@ -364,7 +364,7 @@ export default function CheckoutPage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex items-center gap-2 text-sm">
                   <Lock className="h-4 w-4" />
                   Your payment information is secure and encrypted
                 </div>
@@ -383,19 +383,19 @@ export default function CheckoutPage() {
                 <div className="space-y-3">
                   {items.map((item) => (
                     <div key={item.id} className="flex items-center space-x-3">
-                      <div className="relative w-12 h-12 flex-shrink-0">
+                      <div className="relative h-12 w-12 flex-shrink-0">
                         <Image
                           src={item.image}
                           alt={item.title}
                           fill
-                          className="object-cover rounded-md"
+                          className="rounded-md object-cover"
                         />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium">
                           {item.title}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-xs">
                           ${item.price.toFixed(2)} × {item.quantity}
                         </p>
                       </div>
@@ -448,7 +448,7 @@ export default function CheckoutPage() {
                     : "Place Order"}
                 </Button>
 
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-muted-foreground space-y-1 text-xs">
                   <p>✓ Secure 256-bit SSL encryption</p>
                   <p>✓ 30-day money-back guarantee</p>
                   <p>✓ Free returns on all orders</p>

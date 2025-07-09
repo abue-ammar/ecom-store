@@ -25,10 +25,10 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center space-y-6">
-          <ShoppingBag className="h-24 w-24 mx-auto text-muted-foreground" />
+        <div className="space-y-6 text-center">
+          <ShoppingBag className="text-muted-foreground mx-auto h-24 w-24" />
           <div>
-            <h1 className="text-3xl font-bold mb-2">Your cart is empty</h1>
+            <h1 className="mb-2 text-3xl font-bold">Your cart is empty</h1>
             <p className="text-muted-foreground mb-6">
               Looks like you haven&apos;t added any items to your cart yet.
             </p>
@@ -43,31 +43,31 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+      <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Cart Items */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="space-y-4 lg:col-span-2">
           {items.map((item) => (
             <Card key={item.id}>
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
-                  <div className="relative w-20 h-20 flex-shrink-0">
+                  <div className="relative h-20 w-20 flex-shrink-0">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      className="object-cover rounded-md"
+                      className="rounded-md object-cover"
                     />
                   </div>
 
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <Link href={`/products/${item.id}`}>
-                      <h3 className="font-semibold text-lg hover:text-primary cursor-pointer">
+                      <h3 className="hover:text-primary cursor-pointer text-lg font-semibold">
                         {item.title}
                       </h3>
                     </Link>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       ${item.price.toFixed(2)} each
                     </p>
                   </div>
@@ -81,7 +81,7 @@ export default function CartPage() {
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="font-medium min-w-8 text-center">
+                    <span className="min-w-8 text-center font-medium">
                       {item.quantity}
                     </span>
                     <Button
@@ -91,27 +91,25 @@ export default function CartPage() {
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
-                  </div>
-
-                  <div className="text-right">
-                    <p className="font-semibold text-lg">
+                    <p className="mx-2 text-lg font-semibold">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
                     <Button
                       variant="ghost"
-                      size="sm"
                       onClick={() => handleRemoveItem(item.id, item.title)}
                       className="text-red-500 hover:text-red-700"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 />
                     </Button>
                   </div>
+
+                  <div className="text-right"></div>
                 </div>
               </CardContent>
             </Card>
           ))}
 
-          <div className="flex justify-between items-center pt-4">
+          <div className="flex items-center justify-between pt-4">
             <Link href="/">
               <Button variant="outline">Continue Shopping</Button>
             </Link>
@@ -166,11 +164,11 @@ export default function CartPage() {
                 <Link href="/checkout">
                   <Button className="w-full" size="lg">
                     Proceed to Checkout
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
 
-                <div className="text-sm text-muted-foreground space-y-1">
+                <div className="text-muted-foreground mt-4 space-y-1 text-sm">
                   <p>✓ Secure checkout</p>
                   <p>✓ Free shipping over $100</p>
                   <p>✓ 30-day return policy</p>

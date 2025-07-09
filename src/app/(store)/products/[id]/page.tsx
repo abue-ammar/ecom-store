@@ -57,7 +57,7 @@ export default function ProductDetailsPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center h-64">
+        <div className="flex h-64 items-center justify-center">
           <div className="text-muted-foreground">Loading product...</div>
         </div>
       </div>
@@ -68,10 +68,10 @@ export default function ProductDetailsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+          <h1 className="mb-4 text-2xl font-bold">Product Not Found</h1>
           <p className="text-muted-foreground mb-4">{error}</p>
           <Button onClick={() => router.push("/")}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
         </div>
@@ -82,11 +82,11 @@ export default function ProductDetailsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Button variant="ghost" onClick={() => router.back()} className="mb-6">
-        <ArrowLeft className="h-4 w-4 mr-2" />
+        <ArrowLeft className="mr-2 h-4 w-4" />
         Back
       </Button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Product Image */}
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-lg">
@@ -108,15 +108,15 @@ export default function ProductDetailsPage() {
                 {product.category}
               </Badge>
             )}
-            <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
-            <p className="text-4xl font-bold text-primary mb-4">
+            <h1 className="mb-4 text-3xl font-bold">{product.title}</h1>
+            <p className="text-primary mb-4 text-4xl font-bold">
               ${product.price.toFixed(2)}
             </p>
           </div>
 
           {product.description && (
             <div>
-              <h3 className="text-lg font-semibold mb-2">Description</h3>
+              <h3 className="mb-2 text-lg font-semibold">Description</h3>
               <p className="text-muted-foreground leading-relaxed">
                 {product.description}
               </p>
@@ -127,7 +127,7 @@ export default function ProductDetailsPage() {
             <CardContent className="p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
+                  <label className="mb-2 block text-sm font-medium">
                     Quantity
                   </label>
                   <div className="flex items-center space-x-3">
@@ -139,7 +139,7 @@ export default function ProductDetailsPage() {
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="font-medium text-lg min-w-8 text-center">
+                    <span className="min-w-8 text-center text-lg font-medium">
                       {quantity}
                     </span>
                     <Button
@@ -152,17 +152,17 @@ export default function ProductDetailsPage() {
                   </div>
                 </div>
 
-                <div className="pt-4 space-y-3">
+                <div className="space-y-3 pt-4">
                   <Button
                     onClick={handleAddToCart}
                     className="w-full"
                     size="lg"
                   >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
+                    <ShoppingCart className="mr-2 h-4 w-4" />
                     Add to Cart - ${(product.price * quantity).toFixed(2)}
                   </Button>
 
-                  <div className="text-sm text-muted-foreground space-y-1">
+                  <div className="text-muted-foreground space-y-1 text-sm">
                     <p>✓ Free shipping on orders over $100</p>
                     <p>✓ 30-day return policy</p>
                     <p>✓ 1-year warranty included</p>
