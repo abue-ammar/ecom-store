@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="relative block aspect-square h-full w-full">
       <Link href={`/products/${product.id}`}>
-        <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-blue-600 dark:border-neutral-800 dark:bg-black">
+        <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-black dark:border-neutral-800 dark:bg-black dark:hover:border-white">
           <Image
             src={product.image}
             alt={product.title}
@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <h3 className="mr-4 line-clamp-2 flex-grow pl-2 leading-none tracking-tight">
                 {product.title}
               </h3>
-              <p className="flex-none rounded-full bg-blue-600 p-2 text-white">
+              <p className="flex-none rounded-full bg-black p-2 text-white dark:bg-white dark:text-black">
                 ${product.price.toFixed(2)}
                 <span className="ml-1 inline">USD</span>
               </p>
@@ -63,7 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 e.preventDefault();
                 handleAddToCart();
               }}
-              className="rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700"
+              className="rounded-full bg-black text-white shadow-lg hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               Add to Cart
             </Button>
