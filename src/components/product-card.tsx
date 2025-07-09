@@ -3,7 +3,6 @@
 import { Product } from "@/app/api/products/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useCart } from "@/lib/cart-context";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,49 +21,55 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg py-0">
+    <div className="relative block aspect-square h-full w-full">
       <Link href={`/products/${product.id}`}>
-        <div className="relative aspect-square overflow-hidden cursor-pointer">
+        <div className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800">
           <Image
             src={product.image}
             alt={product.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="relative h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
+            sizes="(min-width: 768px) 33vw, 100vw"
           />
+
+          {/* Bottom overlay with product info */}
+          <div className="absolute bottom-0 left-0 flex w-full px-4 pb-4">
+            <div className="flex items-center rounded-full border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
+              <h3 className="mr-4 line-clamp-2 flex-grow pl-2 leading-none tracking-tight">
+                {product.title}
+              </h3>
+              <p className="flex-none rounded-full bg-blue-600 p-2 text-white">
+                ${product.price.toFixed(2)}
+                <span className="ml-1 inline">USD</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Category badge in top corner */}
           {product.category && (
-            <Badge className="absolute top-2 left-2" variant="secondary">
+            <Badge
+              className="absolute top-2 left-2 bg-white/70 text-black backdrop-blur-md dark:bg-black/70 dark:text-white border-neutral-200 dark:border-neutral-800"
+              variant="secondary"
+            >
               {product.category}
             </Badge>
           )}
+
+          {/* Add to cart button - appears on hover */}
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <Button
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToCart();
+              }}
+              className="rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+            >
+              Add to Cart
+            </Button>
+          </div>
         </div>
       </Link>
-      <CardContent className="p-4">
-        <Link href={`/products/${product.id}`}>
-          <h3 className="font-semibold text-lg mb-2 line-clamp-2 hover:text-primary cursor-pointer">
-            {product.title}
-          </h3>
-        </Link>
-        {product.description && (
-          <p className="text-sm text-muted-foreground mb-2 line-clamp-3">
-            {product.description}
-          </p>
-        )}
-        <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-primary">
-            ${product.price.toFixed(2)}
-          </span>
-        </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0 space-x-2">
-        <Link href={`/products/${product.id}`} className="flex-1">
-          <Button variant="outline" className="w-full" size="sm">
-            View Details
-          </Button>
-        </Link>
-        <Button className="flex-1" size="sm" onClick={handleAddToCart}>
-          Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+    </div>
   );
 }
