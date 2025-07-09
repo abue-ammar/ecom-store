@@ -108,69 +108,87 @@ export default function WishlistPage() {
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {mockWishlistItems.map((item) => (
-            <Card key={item.id} className="group overflow-hidden">
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute top-2 right-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 bg-white/80 hover:bg-white"
-                    onClick={() =>
-                      handleRemoveFromWishlist(item.id, item.title)
-                    }
-                  >
-                    <Trash2 className="h-4 w-4 text-red-500" />
-                  </Button>
-                </div>
-                {!item.inStock && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                    <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-medium text-white">
-                      Out of Stock
-                    </span>
+            <div
+              key={item.id}
+              className="relative block aspect-square h-full w-full"
+            >
+              <Link href={`/products/${item.id}`}>
+                <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-black dark:border-neutral-800 dark:bg-black dark:hover:border-white">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="relative h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                  />
+
+                  {/* Bottom overlay with product info */}
+                  <div className="absolute bottom-0 left-0 flex w-full px-4 pb-4">
+                    <div className="flex items-center rounded-full border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
+                      <h3 className="mr-4 line-clamp-2 flex-grow pl-2 leading-none tracking-tight">
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center gap-1">
+                        <p className="flex-none rounded-full bg-black p-2 text-white dark:bg-white dark:text-black">
+                          ${item.price.toFixed(2)}
+                        </p>
+                        {item.originalPrice > item.price && (
+                          <span className="text-muted-foreground text-xs line-through">
+                            ${item.originalPrice.toFixed(2)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                )}
-              </div>
-              <CardContent className="p-4">
-                <div className="space-y-2">
-                  <h3 className="line-clamp-2 font-semibold">{item.title}</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-primary text-lg font-bold">
-                      ${item.price.toFixed(2)}
-                    </span>
-                    {item.originalPrice > item.price && (
-                      <span className="text-muted-foreground text-sm line-through">
-                        ${item.originalPrice.toFixed(2)}
+
+                  {/* Stock status overlay */}
+                  {!item.inStock && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                      <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-medium text-white">
+                        Out of Stock
                       </span>
-                    )}
-                  </div>
-                  <p className="text-muted-foreground text-xs">
-                    Added {new Date(item.addedDate).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="mt-4 space-y-2">
-                  <Button
-                    className="w-full"
-                    size="sm"
-                    onClick={() => handleAddToCart(item)}
-                    disabled={!item.inStock}
-                  >
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    {item.inStock ? "Add to Cart" : "Out of Stock"}
-                  </Button>
-                  <Link href={`/products/${item.id}`}>
-                    <Button variant="outline" className="w-full" size="sm">
-                      View Details
+                    </div>
+                  )}
+
+                  {/* Remove from wishlist button - top left */}
+                  <div className="absolute top-2 left-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 bg-white/80 hover:bg-white dark:bg-black/80 dark:hover:bg-black"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleRemoveFromWishlist(item.id, item.title);
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
-                  </Link>
+                  </div>
+
+                  {/* Add to cart button - top right */}
+                  <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <Button
+                      size={"icon"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddToCart(item);
+                      }}
+                      disabled={!item.inStock}
+                      className="rounded-full bg-black text-white shadow-lg hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                    >
+                      <ShoppingCart />
+                    </Button>
+                  </div>
+
+                  {/* Added date badge - top center */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 transform">
+                    <span className="rounded-full bg-white/70 px-2 py-1 text-xs text-black backdrop-blur-md dark:bg-black/70 dark:text-white">
+                      Added {new Date(item.addedDate).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </Link>
+            </div>
           ))}
         </div>
       )}

@@ -4,6 +4,7 @@ import { Product } from "@/app/api/products/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -58,14 +59,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Add to cart button - appears on hover */}
           <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             <Button
-              size="sm"
               onClick={(e) => {
                 e.preventDefault();
                 handleAddToCart();
               }}
-              className="rounded-full bg-black text-white shadow-lg hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              size={"icon"}
+              className="rounded-full bg-black text-white shadow-lg hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              Add to Cart
+              <ShoppingCart />
             </Button>
           </div>
         </div>
