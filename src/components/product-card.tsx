@@ -24,13 +24,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="relative block aspect-square h-full w-full">
       <Link href={`/products/${product.id}`}>
-        <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-black dark:border-neutral-800 dark:bg-black dark:hover:border-white">
+        <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black">
           <Image
             src={product.image}
             alt={product.title}
             fill
             className="relative h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
-            sizes="(min-width: 768px) 33vw, 100vw"
           />
 
           {/* Bottom overlay with product info */}

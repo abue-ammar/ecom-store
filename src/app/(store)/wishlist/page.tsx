@@ -113,7 +113,7 @@ export default function WishlistPage() {
               className="relative block aspect-square h-full w-full"
             >
               <Link href={`/products/${item.id}`}>
-                <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white hover:border-black dark:border-neutral-800 dark:bg-black dark:hover:border-white">
+                <div className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black">
                   <Image
                     src={item.image}
                     alt={item.title}

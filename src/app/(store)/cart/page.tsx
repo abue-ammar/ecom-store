@@ -50,8 +50,74 @@ export default function CartPage() {
         <div className="space-y-4 lg:col-span-2">
           {items.map((item) => (
             <Card key={item.id}>
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
+              <CardContent className="p-4 md:p-6">
+                {/* Mobile Layout */}
+                <div className="block space-y-4 md:hidden">
+                  <div className="flex items-start space-x-3">
+                    <div className="relative h-16 w-16 flex-shrink-0">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="rounded-md object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <Link href={`/products/${item.id}`}>
+                        <h3 className="hover:text-primary line-clamp-2 cursor-pointer text-base font-semibold">
+                          {item.title}
+                        </h3>
+                      </Link>
+                      <p className="text-muted-foreground mt-1 text-sm">
+                        ${item.price.toFixed(2)} each
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveItem(item.id, item.title)}
+                      className="p-2 text-red-500 hover:text-red-700"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {/* Quantity and Total Row */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
+                        disabled={item.quantity <= 1}
+                      >
+                        <Minus className="h-3 w-3" />
+                      </Button>
+                      <span className="min-w-8 text-center text-sm font-medium">
+                        {item.quantity}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                      >
+                        <Plus className="h-3 w-3" />
+                      </Button>
+                    </div>
+                    <p className="text-lg font-semibold">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Desktop Layout */}
+                <div className="hidden items-center space-x-4 md:flex">
                   <div className="relative h-20 w-20 flex-shrink-0">
                     <Image
                       src={item.image}
@@ -72,51 +138,58 @@ export default function CartPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      disabled={item.quantity <= 1}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="min-w-8 text-center font-medium">
-                      {item.quantity}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                    <p className="mx-2 text-lg font-semibold">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
+                        disabled={item.quantity <= 1}
+                      >
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                      <span className="min-w-8 text-center font-medium">
+                        {item.quantity}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <p className="min-w-20 text-right text-lg font-semibold">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
                     <Button
                       variant="ghost"
+                      size="sm"
                       onClick={() => handleRemoveItem(item.id, item.title)}
                       className="text-red-500 hover:text-red-700"
                     >
-                      <Trash2 />
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
-
-                  <div className="text-right"></div>
                 </div>
               </CardContent>
             </Card>
           ))}
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-col items-center justify-between gap-4 pt-4 sm:flex-row">
             <Link href="/">
-              <Button variant="outline">Continue Shopping</Button>
+              <Button variant="outline" className="w-full sm:w-auto">
+                Continue Shopping
+              </Button>
             </Link>
             <Button
               variant="ghost"
               onClick={handleClearCart}
-              className="text-red-500 hover:text-red-700"
+              className="w-full text-red-500 hover:text-red-700 sm:w-auto"
             >
               Clear Cart
             </Button>

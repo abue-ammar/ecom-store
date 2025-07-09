@@ -38,33 +38,6 @@ export default function Navbar() {
           <span className="text-xl font-bold">EcomStore</span>
         </Link>
 
-        <nav className="hidden items-center space-x-6 md:flex">
-          <Link
-            href="/"
-            className="hover:text-primary text-sm font-medium transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/products"
-            className="hover:text-primary text-sm font-medium transition-colors"
-          >
-            Products
-          </Link>
-          <Link
-            href="/about"
-            className="hover:text-primary text-sm font-medium transition-colors"
-          >
-            About
-          </Link>
-          <Link
-            href="/contact"
-            className="hover:text-primary text-sm font-medium transition-colors"
-          >
-            Contact
-          </Link>
-        </nav>
-
         <div className="flex items-center space-x-4">
           <ModeToggle />
           <Link href="/cart">

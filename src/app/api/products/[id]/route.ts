@@ -8,9 +8,8 @@ const dummyProducts: Product[] = [
     title: "Premium Wireless Headphones",
     price: 299.99,
     image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&crop=center",
-    description:
-      "Experience premium audio quality with these wireless headphones featuring active noise cancellation, 30-hour battery life, and premium comfort padding. Perfect for music lovers, professionals, and travelers who demand the best in audio technology.",
+      "https://images.unsplash.com/photo-1748189517364-cda16989c1c6?w=400&h=400&fit=crop&crop=center",
+    description: "High-quality wireless headphones with noise cancellation",
     category: "Electronics",
   },
   {
@@ -18,9 +17,8 @@ const dummyProducts: Product[] = [
     title: "Smart Fitness Watch",
     price: 199.99,
     image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&crop=center",
-    description:
-      "Advanced fitness tracking with heart rate monitor, GPS, sleep tracking, and 7-day battery life. Water-resistant design perfect for swimming and intense workouts. Includes fitness coaching and health insights.",
+      "https://images.unsplash.com/photo-1634466511686-a978c60a4965?w=400&h=400&fit=crop&crop=center",
+    description: "Advanced fitness tracking with heart rate monitor",
     category: "Electronics",
   },
   {
@@ -28,9 +26,8 @@ const dummyProducts: Product[] = [
     title: "Organic Cotton T-Shirt",
     price: 29.99,
     image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center",
-    description:
-      "Comfortable organic cotton t-shirt made from sustainably sourced materials. Available in multiple colors and sizes. Soft, breathable fabric perfect for everyday wear.",
+      "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc??w=400&h=400&fit=crop&crop=center",
+    description: "Comfortable organic cotton t-shirt in various colors",
     category: "Clothing",
   },
   {
@@ -38,9 +35,8 @@ const dummyProducts: Product[] = [
     title: "Professional Camera Lens",
     price: 899.99,
     image:
-      "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400&h=400&fit=crop&crop=center",
-    description:
-      "High-performance camera lens for professional photography with ultra-sharp optics, weather sealing, and fast autofocus. Perfect for portraits, landscapes, and professional shoots.",
+      "https://images.unsplash.com/photo-1640043889043-c23117b70692?w=400&h=400&fit=crop&crop=center",
+    description: "High-performance camera lens for professional photography",
     category: "Electronics",
   },
   {
@@ -48,9 +44,8 @@ const dummyProducts: Product[] = [
     title: "Minimalist Backpack",
     price: 79.99,
     image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
-    description:
-      "Stylish and functional backpack for everyday use with laptop compartment, multiple pockets, and water-resistant material. Perfect for work, travel, or daily commuting.",
+      "https://images.unsplash.com/photo-1551677399-f38a96cd1bc7?w=400&h=400&fit=crop&crop=center",
+    description: "Stylish and functional backpack for everyday use",
     category: "Accessories",
   },
   {
@@ -58,10 +53,63 @@ const dummyProducts: Product[] = [
     title: "Wireless Mouse",
     price: 49.99,
     image:
-      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop&crop=center",
-    description:
-      "Ergonomic wireless mouse with long battery life, precision tracking, and comfortable grip. Perfect for office work, gaming, and creative projects.",
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=400&fit=crop&crop=center",
+    description: "Ergonomic wireless mouse with long battery life",
     category: "Electronics",
+  },
+  {
+    id: 7,
+    title: "Ceramic Coffee Mug",
+    price: 19.99,
+    image:
+      "https://images.unsplash.com/photo-1614833193447-427b75eee2f0?w=400&h=400&fit=crop&crop=center",
+    description: "Handcrafted ceramic mug for your daily brew",
+    category: "Home & Kitchen",
+  },
+  {
+    id: 8,
+    title: "Leather Wallet",
+    price: 59.99,
+    image:
+      "https://images.unsplash.com/photo-1612023395494-1c4050b68647?w=400&h=400&fit=crop&crop=center",
+    description: "Premium leather wallet with multiple compartments",
+    category: "Accessories",
+  },
+  {
+    id: 9,
+    title: "Bluetooth Speaker",
+    price: 129.99,
+    image:
+      "https://images.unsplash.com/photo-1621266034770-74d35534f9ae?w=400&h=400&fit=crop&crop=center",
+    description: "Compact Bluetooth speaker with powerful sound",
+    category: "Electronics",
+  },
+  {
+    id: 10,
+    title: "Standing Desk",
+    price: 499.99,
+    image:
+      "https://images.unsplash.com/photo-1622126756000-9fb7f6ed9f06?w=400&h=400&fit=crop&crop=center",
+    description: "Adjustable standing desk for ergonomic work setups",
+    category: "Furniture",
+  },
+  {
+    id: 11,
+    title: "Scented Candle Set",
+    price: 39.99,
+    image:
+      "https://images.unsplash.com/photo-1649344164842-3196fd796ac0?w=400&h=400&fit=crop&crop=center",
+    description: "Aromatic soy candles in calming scents",
+    category: "Home & Kitchen",
+  },
+  {
+    id: 12,
+    title: "Running Shoes",
+    price: 109.99,
+    image:
+      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=400&h=400&fit=crop&crop=center",
+    description: "Lightweight running shoes for daily workouts",
+    category: "Footwear",
   },
 ];
 
