@@ -165,6 +165,7 @@ export default function OrdersPage() {
                           alt={item.title}
                           fill
                           className="rounded-md object-cover"
+                          unoptimized
                         />
                       </div>
                       <div className="flex-1">

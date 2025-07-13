@@ -16,7 +16,7 @@ const dummyProducts: Product[] = [
     title: "Premium Wireless Headphones",
     price: 299.99,
     image:
-      "https://images.unsplash.com/photo-1748189517364-cda16989c1c6?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1748189517364-cda16989c1c6?w=600&h=600&fit=crop&crop=center",
     description: "High-quality wireless headphones with noise cancellation",
     category: "Electronics",
   },
@@ -25,7 +25,7 @@ const dummyProducts: Product[] = [
     title: "Smart Fitness Watch",
     price: 199.99,
     image:
-      "https://images.unsplash.com/photo-1634466511686-a978c60a4965?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1634466511686-a978c60a4965?w=600&h=600&fit=crop&crop=center",
     description: "Advanced fitness tracking with heart rate monitor",
     category: "Electronics",
   },
@@ -34,7 +34,7 @@ const dummyProducts: Product[] = [
     title: "Organic Cotton T-Shirt",
     price: 29.99,
     image:
-      "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc??w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc??w=600&h=600&fit=crop&crop=center",
     description: "Comfortable organic cotton t-shirt in various colors",
     category: "Clothing",
   },
@@ -43,7 +43,7 @@ const dummyProducts: Product[] = [
     title: "Professional Camera Lens",
     price: 899.99,
     image:
-      "https://images.unsplash.com/photo-1640043889043-c23117b70692?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1640043889043-c23117b70692?w=600&h=600&fit=crop&crop=center",
     description: "High-performance camera lens for professional photography",
     category: "Electronics",
   },
@@ -52,7 +52,7 @@ const dummyProducts: Product[] = [
     title: "Minimalist Backpack",
     price: 79.99,
     image:
-      "https://images.unsplash.com/photo-1551677399-f38a96cd1bc7?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1551677399-f38a96cd1bc7?w=600&h=600&fit=crop&crop=center",
     description: "Stylish and functional backpack for everyday use",
     category: "Accessories",
   },
@@ -61,7 +61,7 @@ const dummyProducts: Product[] = [
     title: "Wireless Mouse",
     price: 49.99,
     image:
-      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=600&h=600&fit=crop&crop=center",
     description: "Ergonomic wireless mouse with long battery life",
     category: "Electronics",
   },
@@ -70,7 +70,7 @@ const dummyProducts: Product[] = [
     title: "Ceramic Coffee Mug",
     price: 19.99,
     image:
-      "https://images.unsplash.com/photo-1614833193447-427b75eee2f0?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1614833193447-427b75eee2f0?w=600&h=600&fit=crop&crop=center",
     description: "Handcrafted ceramic mug for your daily brew",
     category: "Home & Kitchen",
   },
@@ -79,7 +79,7 @@ const dummyProducts: Product[] = [
     title: "Leather Wallet",
     price: 59.99,
     image:
-      "https://images.unsplash.com/photo-1612023395494-1c4050b68647?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1612023395494-1c4050b68647?w=600&h=600&fit=crop&crop=center",
     description: "Premium leather wallet with multiple compartments",
     category: "Accessories",
   },
@@ -88,7 +88,7 @@ const dummyProducts: Product[] = [
     title: "Bluetooth Speaker",
     price: 129.99,
     image:
-      "https://images.unsplash.com/photo-1621266034770-74d35534f9ae?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1621266034770-74d35534f9ae?w=600&h=600&fit=crop&crop=center",
     description: "Compact Bluetooth speaker with powerful sound",
     category: "Electronics",
   },
@@ -97,7 +97,7 @@ const dummyProducts: Product[] = [
     title: "Standing Desk",
     price: 499.99,
     image:
-      "https://images.unsplash.com/photo-1622126756000-9fb7f6ed9f06?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1622126756000-9fb7f6ed9f06?w=600&h=600&fit=crop&crop=center",
     description: "Adjustable standing desk for ergonomic work setups",
     category: "Furniture",
   },
@@ -106,7 +106,7 @@ const dummyProducts: Product[] = [
     title: "Scented Candle Set",
     price: 39.99,
     image:
-      "https://images.unsplash.com/photo-1649344164842-3196fd796ac0?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1649344164842-3196fd796ac0?w=600&h=600&fit=crop&crop=center",
     description: "Aromatic soy candles in calming scents",
     category: "Home & Kitchen",
   },
@@ -115,7 +115,7 @@ const dummyProducts: Product[] = [
     title: "Running Shoes",
     price: 109.99,
     image:
-      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=600&h=600&fit=crop&crop=center",
     description: "Lightweight running shoes for daily workouts",
     category: "Footwear",
   },
@@ -140,7 +140,7 @@ export async function POST(request: Request) {
     price: parseFloat(body.price),
     image:
       body.image ||
-      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=600&fit=crop&crop=center",
     description: body.description,
     category: body.category,
   };

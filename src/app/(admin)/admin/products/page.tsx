@@ -97,6 +97,7 @@ export default function AdminProductsPage() {
                           width={48}
                           height={48}
                           className="rounded-lg object-cover"
+                          unoptimized
                         />
                         <div>
                           <div className="font-medium">{product.title}</div>

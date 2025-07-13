@@ -120,6 +120,7 @@ export default function WishlistPage() {
                     fill
                     className="relative h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105"
                     sizes="(min-width: 768px) 33vw, 100vw"
+                    unoptimized
                   />
 
                   {/* Bottom overlay with product info */}

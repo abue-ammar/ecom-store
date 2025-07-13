@@ -389,6 +389,7 @@ export default function CheckoutPage() {
                           alt={item.title}
                           fill
                           className="rounded-md object-cover"
+                          unoptimized
                         />
                       </div>
                       <div className="min-w-0 flex-1">
